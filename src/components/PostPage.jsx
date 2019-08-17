@@ -87,7 +87,7 @@ class PostPage extends Component {
             callbackParamName: 'p'
         }).then(res => {
             if (res.data.feed.entry) {
-                const post = res.data.feed.entry[0]
+                const post = res.data.feed.entry.filter(arr => arr.link.filter(arr1 => arr1.rel === "alternate")[0].href.includes(document.location.pathname) && arr.title.$t === document.title)[0]
                 this.setState({ post, isFetch: true })
                 this.props.updateLabel(res.data.feed.category)
             }

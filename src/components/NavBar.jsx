@@ -169,7 +169,7 @@ class NavBar extends Component {
                             >
                                 <MenuIcon />
                             </IconButton>
-                            <Typography className={classes.title} variant="h6" noWrap>Rxt Blogger</Typography>
+                            <Typography className={classes.title} variant="h6" noWrap>React Blogger</Typography>
                             <div className={classes.search}>
                                 <div className={classes.searchIcon}>
                                     <SearchIcon />

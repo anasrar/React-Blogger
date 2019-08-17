@@ -129,7 +129,7 @@ class CommentList extends Component {
                                         <Card className={classes.cardReply} key={reply.id}>
                                             <CardHeader
                                                 avatar={
-                                                    <Avatar aria-label="recipe" className={classes.avatar}>R</Avatar>
+                                                    <Avatar aria-label="recipe" className={classes.avatar}>{reply.author[0].name.$t[0]}</Avatar>
                                                 }
                                                 title={reply.author[0].name.$t}
                                                 subheader={

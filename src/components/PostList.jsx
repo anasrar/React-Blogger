@@ -167,11 +167,15 @@ class PostList extends Component {
 
                                 </Typography>
                             </CardContent>
-                            <CardMedia
-                                className={classes.media}
-                                image={post.media$thumbnail ? post.media$thumbnail.url.replace("/s72-c/", "/s300/") : "//via.placeholder.com/300/eee/fff.png?text=%20"}
-                                title={post.title.$t}
-                            />
+                            {post.media$thumbnail ? (
+                                <CardMedia
+                                    className={classes.media}
+                                    image={post.media$thumbnail.url.replace("/s72-c/", "/s240/").replace(/^(https?:|)/, '')}
+                                    title={post.title.$t}
+                                />
+                            ) : (
+                                    <Skeleton variant="rect" className={classes.media} />
+                                )}
                             <CardHeader
                                 avatar={
                                     <Avatar aria-label="recipe" className={classes.avatar}>{post.author[0].name.$t[0]}</Avatar>

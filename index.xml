@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:css='false' b:defaultwidgetversion='2' b:js='false' b:layoutsVersion='3' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+  <b:attr name='xmlns' value=''/>
+  <b:attr name='xmlns:b' value=''/>
+  <b:attr name='xmlns:expr' value=''/>
+  <b:attr name='xmlns:data' value=''/>
+  <head>
+
+    <b:if cond='data:view.isHomepage'>
+      <title><data:blog.title/></title>
+      <b:elseif cond='data:view.isPost or data:view.isPage'/>
+      <title><data:blog.pageName/></title>
+      <b:elseif cond='data:view.search.label'/>
+      <title>Label : <data:blog.pageName/></title>
+      <b:elseif cond='data:view.search.query'/>
+      <title><data:view.search.resultsMessage/> - <data:blog.title/></title>
+      <b:elseif cond='data:view.search and !data:view.search.label and !data:view.search.query'/>
+      <title><data:blog.title/></title>
+      <b:elseif cond='data:view.isArchive'/>
+      <title><data:view.archive.rangeMessage/> - <data:blog.title/></title>
+      <b:elseif cond='data:view.isError'/>
+      <title>Halaman Tidak Ditemukan - <data:blog.title/></title>
+    </b:if>
+
+    <meta charset='utf-8'/>
+    <meta content='width=device-width, minimum-scale=1, initial-scale=1, shrink-to-fit=no' name='viewport'/>
+    <meta content='blogger' name='generator'/>
+    <meta content='text/html;charset=UTF-8' http-equiv='Content-Type'/>
+    <link expr:href='data:blog.url' rel='canonical'/>
+    <link href='//fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap' rel='stylesheet'/>
+    <b:if cond='data:view.isLayoutMode'>
+      <b:skin version='1.3.0'><![CDATA[
+/* CSS Reset */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}
+/* HTML5 */
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}body{line-height:1;display:block;}*{margin:0;padding:0;}html{display:block;}ol,ul{list-style:none;}blockquote,q{quotes:none;}blockquote:before,blockquote:after,q:before,q:after{background:transparent;}table{border-collapse:collapse;border-spacing:0;}*,*:before, *:after {-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+/* Body Layout */
+<!-- Variable definitions -->
+<Group description="Komentar Baru Blogger">
+<Variable name="body.background" description="Body Background" type="background" color="#dddfe2" default="#dddfe2 none repeat scroll top left" value="#dddfe2 none repeat scroll top left"/>
+<Variable name="body.font" description="Font" type="font" default="normal 400 14px Nunito, sans-serif" value="normal 400 14px Nunito, sans-serif"/>
+<Variable name="body.text.color" description="Text Color" type="color" default="#1d2129" value="#1d2129"/>
+<Variable name="body.text.font" description="1"
+type="font"
+default="normal 400 14px Nunito, sans-serif" value="normal 400 14px Nunito, sans-serif"/>
+<Variable name="posts.background.color" description="2"
+type="color"
+default="#fff" value="#ffffff"/>
+<Variable name="body.link.color" description="3"
+type="color"
+default="#4299e1" value="#4299e1"/>
+<Variable name="body.link.visited.color" description="4"
+type="color"
+default="#4299e1" value="#4299e1"/>
+<Variable name="body.link.hover.color" description="5"
+type="color"
+default="#1d2129" value="#1d2129"/>
+<Variable name="blog.title.font" description="6"
+type="font"
+default="normal 400 14px Nunito,sans-serif" value="normal 400 14px Nunito,sans-serif"/>
+<Variable name="blog.title.color" description="7"
+type="color"
+default="#fff" value="#ffffff"/>
+<Variable name="header.icons.color" description="8"
+type="color"
+default="#fff" value="#ffffff"/>
+<Variable name="tabs.font" description="9"
+type="font"
+default="normal 400 14px Nunito,sans-serif" value="normal 400 14px Nunito,sans-serif"/>
+<Variable name="tabs.color" description="10"
+type="color"
+default="#ccc" value="#cccccc"/>
+<Variable name="tabs.selected.color" description="11"
+type="color"
+default="#fff" value="#ffffff"/>
+<Variable name="tabs.overflow.background.color" description="12"
+type="color"
+default="#fff" value="#ffffff"/>
+<Variable name="tabs.overflow.color" description="13"
+type="color"
+default="#1d2129" value="#1d2129"/>
+<Variable name="tabs.overflow.selected.color" description="14"
+type="color"
+default="#1d2129" value="#1d2129"/>
+<Variable name="posts.title.color" description="15"
+type="color"
+default="#1d2129" value="#1d2129"/>
+<Variable name="posts.title.font" description="16"
+type="font"
+default="normal 400 14px Nunito,sans-serif" value="normal 400 14px Nunito,sans-serif"/>
+<Variable name="posts.text.font" description="17"
+type="font"
+default="normal 400 14px Nunito,sans-serif" value="normal 400 14px Nunito,sans-serif"/>
+<Variable name="posts.text.color" description="18"
+type="color"
+default="#1d2129" value="#1d2129"/>
+<Variable name="posts.icons.color" description="19"
+type="color"
+default="#1d2129" value="#1d2129"/>
+<Variable name="labels.background.color" description="20"
+type="color"
+default="#4299e1" value="#4299e1"/>
+</Group>
+*/
+]]></b:skin>
+      <b:template-skin>
+        <![CDATA[
+body#layout {width:980px}
+body#layout {background-color: #fff; border: 0}
+body#layout div.section {background-color: #fff}
+]]>
+      </b:template-skin>
+    </b:if>
+
+  </head>
+  <body>
+    <b:section id='root'/>
+  </body>
+</html>

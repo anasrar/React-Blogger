@@ -80,7 +80,8 @@ class PostPage extends Component {
         commentReplyList: [],
         setAnchorEl: null,
         shareURL: "",
-        newComment: true
+        newComment: true,
+        iFrameHeight: "92px"
     }
 
     commentRef = React.createRef()
@@ -97,6 +98,7 @@ class PostPage extends Component {
                 this.props.updateLabel(res.data.feed.category)
             }
         })
+        window.addEventListener("message", this.iFrameChangeHeight)
     }
 
     fetchCommentList() {
@@ -122,11 +124,17 @@ class PostPage extends Component {
     }
 
     newReply = () => {
-        this.setState({ newComment: false })
+        this.setState({ newComment: false, iFrameHeight: "92px" })
     }
 
     newComment = () => {
-        this.setState({ newComment: true })
+        this.setState({ newComment: true, iFrameHeight: "92px" })
+    }
+
+    iFrameChangeHeight = (e) => {
+        if (e.origin.includes("blogger.com")) {
+            this.setState({ iFrameHeight: e.data.substring(26) })
+        }
     }
 
     render() {
@@ -222,7 +230,7 @@ class PostPage extends Component {
                                         this.fetchCommentList()
                                     }
                                 }>Load {this.state.post.thr$total.$t + " "}Comment{(this.state.post.thr$total.$t > 1 ? "s" : null)}</Button></Box>
-                            ) : <CommentList commentList={this.state.commentList} commentReplyList={this.state.commentReplyList} totalComment={this.state.post.thr$total.$t} isFetchComment={this.state.isFetchComment} blogID={/blog-?(\d+)\./.exec(this.state.post.id.$t)[1]} postID={this.state.post.id.$t.split("-").pop()} newReply={this.newReply} isComment={this.state.newComment} />}
+                            ) : <CommentList commentList={this.state.commentList} commentReplyList={this.state.commentReplyList} totalComment={this.state.post.thr$total.$t} isFetchComment={this.state.isFetchComment} blogID={/blog-?(\d+)\./.exec(this.state.post.id.$t)[1]} postID={this.state.post.id.$t.split("-").pop()} newReply={this.newReply} isComment={this.state.newComment} iFrameHeight={this.state.iFrameHeight} />}
                         </React.Fragment>
                     ) : null
                 }
@@ -233,7 +241,7 @@ class PostPage extends Component {
                                 this.state.newComment ? (
                                     <Card>
                                         <CardContent>
-                                            <iframe title="iframe-comment" frameBorder="0" src={"//www.blogger.com/comment-iframe.g?blogID=" + /blog-?(\d+)\./.exec(this.state.post.id.$t)[1] + "&postID=" + this.state.post.id.$t.split("-").pop() + "&skin=contempo"} width="100%" height="284px"></iframe>
+                                            <iframe title="iframe-comment" frameBorder="0" src={"//www.blogger.com/comment-iframe.g?blogID=" + /blog-?(\d+)\./.exec(this.state.post.id.$t)[1] + "&postID=" + this.state.post.id.$t.split("-").pop() + "&skin=contempo"} width="100%" height={this.state.iFrameHeight}></iframe>
                                         </CardContent>
                                     </Card>
                                 ) : (

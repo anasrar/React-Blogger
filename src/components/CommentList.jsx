@@ -123,7 +123,7 @@ class CommentList extends Component {
                                     {!this.props.isComment && this.state.showOn === comment.id ? (
                                         <Card className={classes.cardReply}>
                                             <CardContent>
-                                                <iframe title="iframe-comment" frameBorder="0" src={"//www.blogger.com/comment-iframe.g?blogID=" + this.props.blogID + "&postID=" + this.props.postID + "&parentID=" + comment.id + "&skin=contempo"} width="100%" height="284px"></iframe>
+                                                <iframe title="iframe-comment" frameBorder="0" src={"//www.blogger.com/comment-iframe.g?blogID=" + this.props.blogID + "&postID=" + this.props.postID + "&parentID=" + comment.id + "&skin=contempo"} width="100%" height={this.props.iFrameHeight}></iframe>
                                             </CardContent>
                                         </Card>
                                     ) : null}

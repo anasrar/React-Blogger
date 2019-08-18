@@ -26,6 +26,9 @@ const styles = theme => ({
     avatar: {
         backgroundColor: indigo[500]
     },
+    avatarTransparent: {
+        backgroundColor: "transparent"
+    },
     dateClass: {
         color: grey[500]
     },
@@ -98,8 +101,7 @@ class CommentList extends Component {
                                 <React.Fragment key={i}>
                                     <Card className={classes.card}>
                                         <CardHeader
-                                            avatar={
-                                                <Avatar aria-label="recipe" className={classes.avatar}>R</Avatar>
+                                            avatar={comment.author[0].gd$image.src === "https://img1.blogblog.com/img/b16-rounded.gif" ? (<Avatar aria-label="photos" className={classes.avatar}>{comment.author[0].name.$t[0]}</Avatar>) : (<Avatar aria-label="photos" src={comment.author[0].gd$image.src} className={classes.avatarTransparent}></Avatar>)
                                             }
                                             action={
                                                 <IconButton aria-label="Comment Option" aria-controls="Comment-menu" aria-haspopup="true" onClick={(event) => {
@@ -128,8 +130,7 @@ class CommentList extends Component {
                                     {this.props.commentReplyList.filter(arr => arr.related === comment.id).map(reply => (
                                         <Card className={classes.cardReply} key={reply.id}>
                                             <CardHeader
-                                                avatar={
-                                                    <Avatar aria-label="recipe" className={classes.avatar}>{reply.author[0].name.$t[0]}</Avatar>
+                                                avatar={reply.author[0].gd$image.src === "https://img1.blogblog.com/img/b16-rounded.gif" ? (<Avatar aria-label="photos" className={classes.avatar}>{reply.author[0].name.$t[0]}</Avatar>) : (<Avatar aria-label="photos" src={reply.author[0].gd$image.src} className={classes.avatarTransparent}></Avatar>)
                                                 }
                                                 title={reply.author[0].name.$t}
                                                 subheader={

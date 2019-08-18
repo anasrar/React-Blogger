@@ -44,6 +44,9 @@ const styles = theme => ({
     avatar: {
         backgroundColor: indigo[500]
     },
+    avatarTransparent: {
+        backgroundColor: "transparent"
+    },
     dateClass: {
         color: grey[500]
     },
@@ -97,7 +100,7 @@ class PostList extends Component {
         const { onPage, listPerPage } = this.state
         const url = this.props.isLabelPage ? "feeds/posts/default/-/" + this.props.match.params.label : "feeds/posts/default"
         axios({
-            url: `/${url}?orderby=published&start-index=${onPage}&max-results=${listPerPage}&alt=json-in-script`,
+            url: `${process.env.NODE_ENV === "development" ? "//usereact.blogspot.com" : ""}/${url}?orderby=published&start-index=${onPage}&max-results=${listPerPage}&alt=json-in-script`,
             adapter: jsonpAdapter,
             callbackParamName: 'c'
         }).then(res => {
@@ -112,7 +115,7 @@ class PostList extends Component {
         this.setState({ loadingBar: true })
         const url = this.props.isLabelPage ? "feeds/posts/default/-/" + this.props.match.params.label : "feeds/posts/default"
         axios({
-            url: `/${url}?orderby=published&start-index=${onPage * listPerPage + 1}&max-results=${listPerPage}&alt=json-in-script`,
+            url: `${process.env.NODE_ENV === "development" ? "//usereact.blogspot.com" : ""}/${url}?orderby=published&start-index=${onPage * listPerPage + 1}&max-results=${listPerPage}&alt=json-in-script`,
             adapter: jsonpAdapter,
             callbackParamName: 'c'
         }).then(res => {
@@ -177,8 +180,7 @@ class PostList extends Component {
                                     <Skeleton variant="rect" className={classes.media} />
                                 )}
                             <CardHeader
-                                avatar={
-                                    <Avatar aria-label="recipe" className={classes.avatar}>{post.author[0].name.$t[0]}</Avatar>
+                                avatar={post.author[0].gd$image.src === "https://img1.blogblog.com/img/b16-rounded.gif" ? (<Avatar aria-label="photos" className={classes.avatar}>{post.author[0].name.$t[0]}</Avatar>) : (<Avatar aria-label="photos" src={post.author[0].gd$image.src} className={classes.avatarTransparent}></Avatar>)
                                 }
                                 action={
                                     <React.Fragment>

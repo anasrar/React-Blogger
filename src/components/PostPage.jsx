@@ -14,12 +14,14 @@ import Badge from '@material-ui/core/Badge'
 import Link from '@material-ui/core/Link'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
+import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 
 import Avatar from '@material-ui/core/Avatar'
 import { indigo, grey } from '@material-ui/core/colors'
 
 import CommentIcon from '@material-ui/icons/Comment'
 import ShareIcon from '@material-ui/icons/Share'
+import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 import CommentList from './CommentList'
 
@@ -32,6 +34,9 @@ import TimeAgo from 'react-timeago'
 const styles = theme => ({
     avatar: {
         backgroundColor: indigo[500]
+    },
+    avatarTransparent: {
+        backgroundColor: "transparent"
     },
     dateClass: {
         color: grey[500]
@@ -82,7 +87,7 @@ class PostPage extends Component {
 
     componentDidMount() {
         axios({
-            url: `/feeds/posts/default?q=${document.title}&alt=json-in-script`,
+            url: `${process.env.NODE_ENV === "development" ? "//usereact.blogspot.com" : ""}/feeds/posts/default?q=${document.title}&alt=json-in-script`,
             adapter: jsonpAdapter,
             callbackParamName: 'p'
         }).then(res => {
@@ -96,7 +101,7 @@ class PostPage extends Component {
 
     fetchCommentList() {
         axios({
-            url: `/feeds/${this.state.post.id.$t.split("-").pop()}/comments/default?alt=json-in-script&reverse=false&orderby=published&start-index=1`,
+            url: `${process.env.NODE_ENV === "development" ? "//usereact.blogspot.com" : ""}/feeds/${this.state.post.id.$t.split("-").pop()}/comments/default?alt=json-in-script&reverse=false&orderby=published&start-index=1`,
             adapter: jsonpAdapter,
             callbackParamName: 'c'
         }).then(res => {
@@ -128,6 +133,17 @@ class PostPage extends Component {
         const { classes } = this.props;
         return (
             <Grid item xs={12} sm={8} className={classes.box}>
+                <Card className={classes.card}>
+                    <Box p={2}>
+                        {this.state.isFetch ? (
+                            <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb" maxItems={2}>
+                                <Link color="inherit" href="/">Home</Link>
+                                {this.state.post.category.length ? (<Link color="inherit" href={"/search/label/" + this.state.post.category[0].term}>{this.state.post.category[0].term}</Link>) : null}
+                                <Typography color="textPrimary">{this.state.post.title.$t}</Typography>
+                            </Breadcrumbs>
+                        ) : <Skeleton height={9} className={classes.skeletonTitle} />}
+                    </Box>
+                </Card>
                 <Card className={classes.card}>
                     {!this.state.isFetch ? (
                         <React.Fragment>
@@ -165,8 +181,7 @@ class PostPage extends Component {
                                     </Typography>
                                 </CardContent>
                                 <CardHeader
-                                    avatar={
-                                        <Avatar aria-label="recipe" className={classes.avatar}>R</Avatar>
+                                    avatar={this.state.post.author[0].gd$image.src === "https://img1.blogblog.com/img/b16-rounded.gif" ? (<Avatar aria-label="photos" className={classes.avatar}>{this.state.post.author[0].name.$t[0]}</Avatar>) : (<Avatar aria-label="photos" src={this.state.post.author[0].gd$image.src} className={classes.avatarTransparent}></Avatar>)
                                     }
                                     action={
                                         <React.Fragment>

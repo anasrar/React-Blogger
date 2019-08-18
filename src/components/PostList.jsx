@@ -28,6 +28,7 @@ import axios from 'axios'
 import jsonpAdapter from 'axios-jsonp'
 import LinesEllipsis from 'react-lines-ellipsis'
 import TimeAgo from 'react-timeago'
+import qs from 'qs'
 
 const styles = theme => ({
     media: {
@@ -99,14 +100,20 @@ class PostList extends Component {
     componentDidMount() {
         const { onPage, listPerPage } = this.state
         const url = this.props.isLabelPage ? "feeds/posts/default/-/" + this.props.match.params.label : "feeds/posts/default"
+        const query = this.props.isSearchPage && qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).q ? "&q=" + qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).q : ""
         axios({
-            url: `${process.env.NODE_ENV === "development" ? "//usereact.blogspot.com" : ""}/${url}?orderby=published&start-index=${onPage}&max-results=${listPerPage}&alt=json-in-script`,
+            url: `${process.env.NODE_ENV === "development" ? "//usereact.blogspot.com" : ""}/${url}?orderby=published&start-index=${onPage}&max-results=${listPerPage}&alt=json-in-script${query}`,
             adapter: jsonpAdapter,
             callbackParamName: 'c'
         }).then(res => {
-            const listPosts = res.data.feed.entry
-            this.setState({ listPosts, isFetch: true, isLastPage: res.data.feed.entry.length !== 6 })
-            this.props.updateLabel(res.data.feed.category)
+            if (res.data.feed.entry) {
+                const listPosts = res.data.feed.entry
+                this.setState({ listPosts, isFetch: true, isLastPage: res.data.feed.entry.length !== 6 })
+                this.props.updateLabel(res.data.feed.category)
+            } else {
+                this.setState({ isFetch: true, isLastPage: true })
+                this.props.updateLabel(res.data.feed.category)
+            }
         })
     }
 
@@ -114,8 +121,9 @@ class PostList extends Component {
         const { onPage, listPerPage, listPosts } = this.state
         this.setState({ loadingBar: true })
         const url = this.props.isLabelPage ? "feeds/posts/default/-/" + this.props.match.params.label : "feeds/posts/default"
+        const query = this.props.isSearchPage && qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).q ? "&q=" + qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).q : ""
         axios({
-            url: `${process.env.NODE_ENV === "development" ? "//usereact.blogspot.com" : ""}/${url}?orderby=published&start-index=${onPage * listPerPage + 1}&max-results=${listPerPage}&alt=json-in-script`,
+            url: `${process.env.NODE_ENV === "development" ? "//usereact.blogspot.com" : ""}/${url}?orderby=published&start-index=${onPage * listPerPage + 1}&max-results=${listPerPage}&alt=json-in-script${query}`,
             adapter: jsonpAdapter,
             callbackParamName: 'c'
         }).then(res => {

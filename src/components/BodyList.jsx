@@ -44,6 +44,7 @@ class BodyList extends Component {
                                         <Route path="/" exact render={props => <PostList {...props} updateLabel={this.props.updateLabel} />} />
                                         <Route path="/([0-9]+)/([0-9]+)/([\.\-\w\S]+)" exact render={props => <PostPage {...props} updateLabel={this.props.updateLabel} />} />
                                         <Route path="/search/label/:label([\w\s]+)" exact render={props => <PostList {...props} updateLabel={this.props.updateLabel} isLabelPage={true} />} />
+                                        <Route path="/search" exact render={props => <PostList {...props} updateLabel={this.props.updateLabel} isSearchPage={true} />} />
                                     </Switch>
                                 </Router>
                             </Grid>

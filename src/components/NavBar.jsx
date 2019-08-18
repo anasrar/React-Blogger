@@ -170,7 +170,7 @@ class NavBar extends Component {
                                 <MenuIcon />
                             </IconButton>
                             <Typography className={classes.title} variant="h6" noWrap>React Blogger</Typography>
-                            <div className={classes.search}>
+                            <form className={classes.search} action="/search/">
                                 <div className={classes.searchIcon}>
                                     <SearchIcon />
                                 </div>
@@ -181,8 +181,9 @@ class NavBar extends Component {
                                         input: classes.inputInput,
                                     }}
                                     inputProps={{ 'aria-label': 'search' }}
+                                    name="q"
                                 />
-                            </div>
+                            </form>
                         </Toolbar>
                     </Container>
                 </AppBar>
